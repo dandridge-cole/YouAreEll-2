@@ -1,4 +1,4 @@
-package views;
+package main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +9,9 @@ import java.util.List;
 
 import controllers.IdController;
 import controllers.MessageController;
+import views.YouAreEll;
 
-// Simple Shell is a Console view for YouAreEll.
+// Simple Shell is a Console view for views.YouAreEll.
 public class SimpleShell {
 
 
