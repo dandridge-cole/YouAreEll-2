@@ -1,0 +1,24 @@
+[
+  {
+    "toid": "",
+    "sequence": "bf121e69d6d8768db7099b20d94d9ba8467fad41",
+    "message": "dtqyguehif",
+    "fromid": "calebpowell-oak",
+    "timestamp": "2019-06-27T19:12:19.300040137Z"
+  },
+  {
+    "toid": "",
+    "sequence": "4c016a8793b2865bd59d31dfe959a123e3766b9a",
+    "message": "Test",
+    "fromid": "BCorbett0312",
+    "timestamp": "2019-06-27T18:27:19.501988204Z"
+  },
+  {
+    "toid": "rfrieger",
+    "sequence": "349443d5ba0147e3650297eca1ec90c6b430a584",
+    "message": "that was unfair",
+    "fromid": "ardcarrion",
+    "timestamp": "2019-06-27T15:58:01.121025852Z"
+  }
+]
+ctrl opt l

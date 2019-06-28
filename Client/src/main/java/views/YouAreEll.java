@@ -29,6 +29,16 @@ public class YouAreEll {
     }
 
     public String MakeURLCall(String mainurl, String method, String jpayload) {
+
+        switch (mainurl){
+            case "/ids": {
+                return idCtrl.getIds().toString();
+            }
+            case "/messages":{
+                return msgCtrl.getMessages().toString();
+            }
+        }
         return "nada";
+
     }
 }

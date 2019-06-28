@@ -1,6 +1,9 @@
 package models;
 
-/* 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/*
  * POJO for an Message object
  */
 public class Message extends Data{
@@ -22,6 +25,30 @@ public class Message extends Data{
         this.fromid=fromid;
         this.toid=toid;
     }
+   /* @JsonCreator
+    public Message (
+            @JsonProperty("message") String message,
+            @JsonProperty("fromid") String fromid,
+            @JsonProperty("toid") String toid) {
+        this.message=message;
+        this.fromid=fromid;
+        this.toid=toid;
+    }
+
+
+    @JsonCreator
+    public Message(
+            @JsonProperty("message") String message,
+            @JsonProperty("fromid") String fromid,
+            @JsonProperty("toid") String toid,
+            @JsonProperty("sequence") String sequence,
+            @JsonProperty("timestamp") String timestamp) {
+        this.message=message;
+        this.fromid=fromid;
+        this.toid=toid;
+        this.sequence=sequence;
+        this.timestamp=timestamp;
+    }*/
 
     public String getMessage() {
         return message;
@@ -62,4 +89,20 @@ public class Message extends Data{
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
+
+
 }
+/*
+public class BeanWithCreator {
+    public int id;
+    public String name;
+
+    @JsonCreator
+    public BeanWithCreator(
+      @JsonProperty("id") int id,
+      @JsonProperty("theName") String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+ */

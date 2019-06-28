@@ -18,11 +18,11 @@ public class TransactionController {
 
     static HttpResponse<JsonNode> get(String path){
         fullURL=rootURL+path;
-        return Unirest.get(fullURL).asJson();
+        return Unirest.get(fullURL).header("accept","application/json").asJson();
     }
 
-    static String post (String path, String json){
+    static JsonNode post (String path, String json){
         fullURL=rootURL+path;
-        return Unirest.post(fullURL).body(json).asString().toString();
+        return Unirest.post(fullURL).body(json).asJson().getBody();
     }
 }

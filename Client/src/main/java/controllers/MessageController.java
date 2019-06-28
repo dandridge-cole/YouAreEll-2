@@ -15,34 +15,34 @@ public class MessageController extends DataController<Message> {
     private HashSet<Message> messagesSeen;
     // why a HashSet??
 
-    public ArrayList<Message> getMessages() {
+    public List<Message> getMessages() {
         String path = "/messages";
         HttpResponse<JsonNode> response = TransactionController.get(path);
-        return objectFromJSON(response.getBody().toString());
+        return messagesFromJSON(response.getBody());
     }
-    public ArrayList<Message> getMessagesForId(Id Id) {
+    public List<Message> getMessagesForId(Id Id) {
         String path = "/ids/"+Id+"/messages";
         HttpResponse<JsonNode> response = TransactionController.get(path);
-        return objectFromJSON(response.getBody().toString());
+        return messagesFromJSON(response.getBody());
     }
     public Message getMessageForSequence(String seq) {
-        ArrayList<Message> messages = getMessages();
-        for(Message message:messages)if(message.getSequence().equals(seq))return message;
-        return null;
+        String path = "/messages/"+seq;
+        HttpResponse<JsonNode> response = TransactionController.get(path);
+        List<Message> responseList = messagesFromJSON(response.getBody());
+        return responseList.get(0);
     }
 
-    public ArrayList<Message> getMessagesFromFriend(Id myId, Id friendId) {
-        List<Message> messages = this.getMessagesForId(myId);
-        ArrayList<Message> selected = new ArrayList<>();
-        for(Message message:messages)if(message.getFromId().equals(friendId)) selected.add(message);
-        return selected;
+    public List<Message> getMessagesFromFriend(Id myId, Id friendId) {
+        String path = "/ids/"+myId+"/from/"+friendId;
+        HttpResponse<JsonNode> response = TransactionController.get(path);
+        return messagesFromJSON(response.getBody());
     }
 
     public Message postMessage(Id myId, Id toId, Message msg) {
         String path = "/ids/"+myId+"/messages";
         Message message = new Message(msg.getMessage(),myId.getGithubID(),toId.getGithubID());
-        String response = TransactionController.post(path,objectToJSON(message));
-        List<Message> responseList = objectFromJSON(response);
+        JsonNode response = TransactionController.post(path,objectToJSON(message));
+        List<Message> responseList = messagesFromJSON(response);
         return responseList.get(0);
     }
 /*
