@@ -19,25 +19,7 @@ public abstract class DataController<E extends Data> {
 
     private ObjectMapper om = new ObjectMapper();
 
-    List<Message> messagesFromJSON(JsonNode json){
-        try {
-            List<Message> objects = Arrays.asList(om.readValue(json.toString(), Message[].class));
-            return objects;
-        } catch (IOException ioe){
-            System.out.println(ioe.getMessage());
-            return null;
-        }
-    }
 
-    List<Id> idsFromJSON(JsonNode json){
-        try {
-            List<Id> objects = Arrays.asList(om.readValue(json.toString(), Id[].class));
-            return objects;
-        } catch (IOException ioe){
-            System.out.println(ioe.getMessage());
-            return null;
-        }
-    }
 /*
     List<E> objectFromJSON(JsonNode json){
         try {

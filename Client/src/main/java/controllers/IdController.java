@@ -1,12 +1,20 @@
 package controllers;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import kong.unirest.JsonNode;
 import models.Id;
 
 
 public class IdController extends DataController<Id>{
     Id myId;
+    private ObjectMapper om = new ObjectMapper();
 
     public ArrayList<Id> getIds() {
         return null;
@@ -21,9 +29,17 @@ public class IdController extends DataController<Id>{
     }
 
 
-/*
-    private ObjectMapper om = new ObjectMapper();
-    private ArrayList<Id> iDFromJSON(String json){
+    List<Id> idsFromJSON(JsonNode json){
+        try {
+            List<Id> objects = Arrays.asList(om.readValue(json.toString(), Id[].class));
+            return objects;
+        } catch (IOException ioe){
+            System.out.println(ioe.getMessage());
+            return null;
+        }
+    }
+
+    private ArrayList<Id> idFromJSON(String json){
         try {
             ArrayList<Id> id = om.readValue(json, new TypeReference<List<Id>>() {});
             return id;
@@ -32,7 +48,8 @@ public class IdController extends DataController<Id>{
             return null;
         }
     }
-    private String iDoJSON(Id id){
+/*
+    private String idToJSON(Id id){
         try{
             String json = om.writeValueAsString(id);
             return json;

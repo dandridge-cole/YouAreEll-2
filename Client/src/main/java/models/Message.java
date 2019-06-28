@@ -2,6 +2,8 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /*
  * POJO for an Message object
@@ -13,6 +15,18 @@ public class Message extends Data{
     private String sequence;
     private String timestamp;
 
+    private ObjectMapper om = new ObjectMapper();
+
+//    public Message (String message, String fromid, String toid) {
+//        this.message=message;
+//        this.fromid=fromid;
+//        this.toid=toid;
+//    }
+//
+//    public Message (){
+//
+//    }
+    /*
     public Message (String message, String fromid, String toid, String sequence, String timestamp) {
         this.message=message;
         this.fromid=fromid;
@@ -20,12 +34,7 @@ public class Message extends Data{
         this.sequence=sequence;
         this.timestamp=timestamp;
     }
-    public Message (String message, String fromid, String toid) {
-        this.message=message;
-        this.fromid=fromid;
-        this.toid=toid;
-    }
-   /* @JsonCreator
+    @JsonCreator
     public Message (
             @JsonProperty("message") String message,
             @JsonProperty("fromid") String fromid,
@@ -58,19 +67,19 @@ public class Message extends Data{
         this.message = message;
     }
 
-    public String getFromId() {
+    public String getFromid() {
         return fromid;
     }
 
-    public void setFromId(String fromid) {
+    public void setFromid(String fromid) {
         this.fromid = fromid;
     }
 
-    public String getToId() {
+    public String getToid() {
         return toid;
     }
 
-    public void setToId(String toid) {
+    public void setToid(String toid) {
         this.toid = toid;
     }
 
@@ -90,6 +99,25 @@ public class Message extends Data{
         this.timestamp = timestamp;
     }
 
+
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n\t{" +
+                "\n\t\t\"sequence\":"+this.sequence+
+                "\n\t\t\"timestamp\":"+this.timestamp+
+                "\n\t\t\"fromid\":"+this.fromid+
+                "\n\t\t\"toid\":"+this.toid+
+                "\n\t\t\"message\":"+this.message+
+                "\n\t}");
+//        try{
+//            String json = om.writeValueAsString(this);
+//            return json;
+//        } catch (JsonProcessingException jpe){
+//            System.out.println(jpe.getMessage());
+//            return null;
+//        }
+        return builder.toString();
+    }
 
 }
 /*
