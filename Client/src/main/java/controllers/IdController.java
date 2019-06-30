@@ -2,12 +2,11 @@ package controllers;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import models.Id;
 
@@ -16,33 +15,46 @@ public class IdController extends DataController<Id>{
     Id myId;
     private ObjectMapper om = new ObjectMapper();
 
-    public ArrayList<Id> getIds() {
+    public List<Id> getIds() {
+        String path = "/ids";
+        HttpResponse<JsonNode> response = TransactionController.get(path);
+        return idsFromJSON(response.getBody().toString());
+    }
+
+    public Id postId(String path, Id id) {
+        JsonNode response = TransactionController.post(path,objectToJSON(id));
+     //   return response.toString();
+         return idsFromJSON("["+response.toString()+"]").get(0);
+    }
+
+    public Id putId(String path, Id id) {
+        JsonNode response = TransactionController.put(path,objectToJSON(id));
+   //     return response.toString();
+        return idsFromJSON("["+response.toString()+"]").get(0);
+    }
+
+    public String checkIfExists(String github){
+        List<Id> list = getIds();
+        for (Id id:list) if(id.getGithub().equals(github)) return id.getUserid();
         return null;
     }
 
-    public Id postId(Id id) {
-        return null;
-    }
+//    List<Id> idsFromJSON(JsonNode json){
+//        try {
+//            List<Id> objects = Arrays.asList(om.readValue(json.toString(), Id[].class));
+//            return objects;
+//        } catch (IOException ioe){
+//            System.out.println(ioe.getMessage());
+//            return null;
+//        }
+//    }
 
-    public Id putId(Id id) {
-        return null;
-    }
-
-
-    List<Id> idsFromJSON(JsonNode json){
+    public List<Id> idsFromJSON(String json){
         try {
-            List<Id> objects = Arrays.asList(om.readValue(json.toString(), Id[].class));
-            return objects;
-        } catch (IOException ioe){
-            System.out.println(ioe.getMessage());
-            return null;
-        }
-    }
-
-    private ArrayList<Id> idFromJSON(String json){
-        try {
-            ArrayList<Id> id = om.readValue(json, new TypeReference<List<Id>>() {});
-            return id;
+            List<Id> ids = om.readValue(
+                    json,new TypeReference<List<Id>>() { });
+          //  ArrayList<Id> ids = om.readValue(json, new TypeReference<List<Id>>() {});
+            return ids;
         } catch (IOException ioe){
             System.out.println(ioe.getStackTrace());
             return null;

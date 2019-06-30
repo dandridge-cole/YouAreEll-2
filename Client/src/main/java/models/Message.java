@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import views.MessageTextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /*
  * POJO for an Message object
@@ -16,16 +21,16 @@ public class Message extends Data{
     private String timestamp;
 
     private ObjectMapper om = new ObjectMapper();
+    List<String> list = new ArrayList<>();
 
-//    public Message (String message, String fromid, String toid) {
-//        this.message=message;
-//        this.fromid=fromid;
-//        this.toid=toid;
-//    }
-//
-//    public Message (){
-//
-//    }
+    public Message (String message, String fromid, String toid) {
+        this.message=message;
+        this.fromid=fromid;
+        this.toid=toid;
+    }
+
+    public Message (){
+    }
     /*
     public Message (String message, String fromid, String toid, String sequence, String timestamp) {
         this.message=message;
@@ -99,25 +104,11 @@ public class Message extends Data{
         this.timestamp = timestamp;
     }
 
-
     public String toString(){
-        StringBuilder builder = new StringBuilder();
-        builder.append("\n\t{" +
-                "\n\t\t\"sequence\":"+this.sequence+
-                "\n\t\t\"timestamp\":"+this.timestamp+
-                "\n\t\t\"fromid\":"+this.fromid+
-                "\n\t\t\"toid\":"+this.toid+
-                "\n\t\t\"message\":"+this.message+
-                "\n\t}");
-//        try{
-//            String json = om.writeValueAsString(this);
-//            return json;
-//        } catch (JsonProcessingException jpe){
-//            System.out.println(jpe.getMessage());
-//            return null;
-//        }
-        return builder.toString();
+        MessageTextView mtv = new MessageTextView(this);
+        return mtv.toString();
     }
+
 
 }
 /*

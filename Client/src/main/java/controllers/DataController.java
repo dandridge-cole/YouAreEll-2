@@ -1,19 +1,9 @@
 package controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-//import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Data;
-import kong.unirest.JsonNode;
-import models.Id;
-import models.Message;
-import org.json.JSONArray;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public abstract class DataController<E extends Data> {
 

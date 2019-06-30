@@ -4,10 +4,18 @@ import models.Message;
 
 public class MessageTextView {
 
-    public MessageTextView(Message msgToDisplay) {
+    private Message msg;
 
+    public MessageTextView(Message msgToDisplay) {
+        this.msg = msgToDisplay;
     }
     @Override public String toString() {
-        return null;
-    } 
+        return ("\n\t{" +
+                "\n\t\t\"sequence\":" + this.msg.getSequence() +
+                "\n\t\t\"timestamp\":" + this.msg.getTimestamp() +
+                "\n\t\t\"fromid\":" + this.msg.getFromid() +
+                "\n\t\t\"toid\":" + this.msg.getToid() +
+                "\n\t\t\"message\":" + this.msg.getMessage() +
+                "\n\t}");
+    }
 }

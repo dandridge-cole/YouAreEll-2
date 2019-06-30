@@ -1,16 +1,27 @@
 package models;
 
-/* 
+import views.IdTextView;
+
+/*
  * POJO for an Id object
  */
 public class Id extends Data{
+    private String userid;
     private String name;
-    private String githubID;
+    private String github;
 
-    public Id (String name, String githubId) {
+    public Id (String userid, String name, String github) {
+        this.userid=userid;
         this.name=name;
-        this.githubID=githubId;
+        this.github=github;
     }
+
+    public Id(){
+    }
+
+    public String getUserid() {return userid;}
+
+    public void setUserid(String userid) {this.userid = userid;}
 
     public String getName() {
         return name;
@@ -20,12 +31,17 @@ public class Id extends Data{
         this.name = name;
     }
 
-    public String getGithubID() {
-        return githubID;
+    public String getGithub() {
+        return github;
     }
 
-    public void setGithubID(String githubID) {
-        this.githubID = githubID;
+    public void setGithub(String github) {
+        this.github = github;
     }
 
+
+    public String toString(){
+        IdTextView itv = new IdTextView(this);
+        return itv.toString();
+    }
 }

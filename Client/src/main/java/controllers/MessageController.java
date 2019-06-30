@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -19,42 +18,42 @@ public class MessageController extends DataController<Message> {
     private HashSet<Message> messagesSeen;
     // why a HashSet??
 
-    public List<Message> getMessages() {
-        String path = "/messages";
+    public List<Message> getMessages(String path) {
+       // String path = "/messages";
         HttpResponse<JsonNode> response = TransactionController.get(path);
+        if(response.getBody()==null) {
+            List<Message> emptyList = new ArrayList<>();
+            emptyList.add(new Message("","",""));
+            return emptyList;
+        }
         return messagesFromJSON(response.getBody().toString());
     }
-    public List<Message> getMessagesForId(Id Id) {
-        String path = "/ids/"+Id+"/messages";
-        HttpResponse<JsonNode> response = TransactionController.get(path);
-        return messagesFromJSON(response.getBody().toString());
+    public List<Message> getMessages(String path, Id Id) {
+        path = "/ids/"+Id+path;
+        return getMessages(path);
     }
-    public Message getMessageForSequence(String seq) {
-        String path = "/messages/"+seq;
-        HttpResponse<JsonNode> response = TransactionController.get(path);
-        List<Message> responseList = messagesFromJSON(response.getBody().toString());
-        return responseList.get(0);
+    public Message getMessages(String path, String seq) {
+        path = path+seq;
+        return getMessages(path).get(0);
     }
 
-    public List<Message> getMessagesFromFriend(Id myId, Id friendId) {
-        String path = "/ids/"+myId+"/from/"+friendId;
-        HttpResponse<JsonNode> response = TransactionController.get(path);
-        return messagesFromJSON(response.getBody().toString());
+    public List<Message> getMessages(String path, String myId, String friendId) {
+        if(friendId.equals("")) path = "/ids/"+myId+path;
+        else path="/ids/"+myId+"/from/"+friendId;
+        return getMessages(path);
     }
 
-//    public Message postMessage(Id myId, Id toId, Message msg) {
-//        String path = "/ids/"+myId+"/messages";
-//        Message message = new Message(msg.getMessage(),myId.getGithubID(),toId.getGithubID());
-//        JsonNode response = TransactionController.post(path,objectToJSON(message));
-//        List<Message> responseList = messagesFromJSON(response.toString());
-//        return responseList.get(0);
-//    }
+    public Message postMessage(String path, Message msg) {
+        path = "/ids/"+msg.getFromid()+path;
+        JsonNode response = TransactionController.post(path,objectToJSON(msg));
+      //  return response.toString();
+        return messagesFromJSON("["+response.toString()+"]").get(0);
+        //return responseList.get(0);
+    }
 
-    List<Message> messagesFromJSON(String json){
+    public List<Message> messagesFromJSON(String json){
         try {
-
-            List<Message> names = om.readValue(
-                    json,
+            List<Message> messages = om.readValue(json,
 //                    "[{\n" +
 //                    "        \"sequence\": \"c5fbeb4f852c3991fbd1b1e244370074aea2a0b9\",\n" +
 //                    "        \"timestamp\": \"2019-06-26T20:25:58.11714073Z\",\n" +
@@ -71,9 +70,8 @@ public class MessageController extends DataController<Message> {
 //                    "    }]",
 
                     new TypeReference<List<Message>>() { });
-
           //  List<Message> objects = Arrays.asList(om.readValue(json.toString(), Message[].class));
-            return names;
+            return messages;
         } catch (IOException ioe){
             System.out.println(ioe.getMessage());
             return null;

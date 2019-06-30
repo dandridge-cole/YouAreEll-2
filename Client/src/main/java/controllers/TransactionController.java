@@ -25,4 +25,9 @@ public class TransactionController {
         fullURL=rootURL+path;
         return Unirest.post(fullURL).body(json).asJson().getBody();
     }
+
+    static JsonNode put (String path, String json){
+        fullURL=rootURL+path;
+        return Unirest.put(fullURL).body(json).asJson().getBody();
+    }
 }
