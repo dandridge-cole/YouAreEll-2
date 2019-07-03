@@ -29,7 +29,7 @@ public class MessageController extends DataController<Message> {
         return messagesFromJSON(response.getBody().toString());
     }
     public List<Message> getMessages(String path, Id Id) {
-        path = "/ids/"+Id+path;
+        path = "/ids/"+Id.getGithub()+path;
         return getMessages(path);
     }
     public Message getMessages(String path, String seq) {
